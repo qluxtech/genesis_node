@@ -2,7 +2,10 @@ import os
 import asyncio
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import qulacs
+try:
+    import qulacs
+except ImportError:
+    qulacs = None
 
 app = FastAPI(title="Quantum Highway - Genesis Node", version="1.0.0")
 
