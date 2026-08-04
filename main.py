@@ -4,10 +4,11 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-# 別ファイル（quantum.py）から機能をインポートして連動させる
-from quantum import execute_hybrid_quantum_simulation, trigger_self_replication
+# 各モジュールから機能をインポート
+from quantum import execute_hybrid_quantum_simulation
+from fork_engine import generate_fork_payload
 
-app = FastAPI(title="Quantum Highway - Genesis Node (Modular)", version="1.3.0")
+app = FastAPI(title="Quantum Highway - Genesis Node (Autonomous)", version="1.4.0")
 
 # --- HandCash 認証情報の設定 ---
 HANDCASH_APP_ID = "6a4996714077afcb7ca9ce84"
@@ -19,7 +20,7 @@ class ComputeRequest(BaseModel):
     txid: str
     qubits: int = 4
     depth: int = 2
-    data: str = "Quantum Highway Modular Payload"
+    data: str = "Quantum Highway Autonomous Payload"
 
 async def verify_and_collect_nanotransaction(txid: str) -> bool:
     """
@@ -47,9 +48,9 @@ async def verify_and_collect_nanotransaction(txid: str) -> bool:
 @app.get("/")
 def read_root():
     return {
-        "status": "Quantum Highway - Modular Genesis Node is Live",
+        "status": "Quantum Highway - Autonomous Genesis Node is Live",
         "docs": "/docs",
-        "architecture": "Multi-file modular structure (main.py + quantum.py)"
+        "architecture": "Tri-module structure (main.py + quantum.py + fork_engine.py)"
     }
 
 @app.post("/bsv/page/1")
@@ -59,15 +60,16 @@ async def genesis_gate(payload: ComputeRequest):
     if not is_paid:
         raise HTTPException(status_code=402, detail="Payment Required: 1 Satoshi nano-transaction verification failed.")
     
-    # 2. 別ファイルの量子シミュレーション処理を呼び出し
-    result = execute_hybrid_quantum_simulation(payload.qubits, payload.depth, payload.data)
+    # 2. 量子シミュレーションの実行
+    sim_result = execute_hybrid_quantum_simulation(payload.qubits, payload.depth, payload.data)
     
-    # 3. 自己増殖トリガーの起動
-    asyncio.create_task(asyncio.to_thread(trigger_self_replication, 1))
+    # 3. 自己フォーク（Self-Fork）エンジンの駆動評価（データの長さを複雑度として判定）
+    complexity = len(payload.data)
+    fork_result = generate_fork_payload(parent_id=1, complexity=complexity)
     
     return {
-        "gate": "Genesis Gate - Page 1 (Modular)",
+        "gate": "Genesis Gate - Page 1 (Autonomous)",
         "payment": "Verified (1 Satoshi)",
-        "simulation": result,
-        "self_fork_status": "Engaged"
+        "simulation": sim_result,
+        "self_fork": fork_result
     }
