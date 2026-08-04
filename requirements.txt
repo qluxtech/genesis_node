@@ -1,5 +1,4 @@
 fastapi
 uvicorn
-qulacs
 pydantic
 httpx
