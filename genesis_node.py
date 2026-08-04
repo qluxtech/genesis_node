@@ -2,12 +2,13 @@ import os
 import asyncio
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-try:
-    import qulacs
-except ImportError:
-    qulacs = None
+try:import qulacs
+except ImportError:qulacs = None
 
 app = FastAPI(title="Quantum Highway - Genesis Node", version="1.0.0")
+@app.get("/")
+def read_root():
+    return {"status": "Quantum Highway - Genesis Node is Live", "docs": "/docs"}
 
 # --- HandCash 認証情報の設定 ---
 HANDCASH_APP_ID = "6a4996714077afcb7ca9ce84"
