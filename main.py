@@ -7,7 +7,7 @@ from pydantic import BaseModel
 import httpx
 
 app = FastAPI(
-    title="Ultra-Genesis Teranode Omni-Grid (Autonomous Economic Full-Core)",
+    title="Qlux (Economic Full-Core)",
     version="12.0.0",
     description="Fully autonomous global micro-payment economic loop and infinite node mesh."
 )
