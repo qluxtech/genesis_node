@@ -117,8 +117,8 @@ async def verify_and_collect_nanotransaction(
 
 @app.on_event("startup")
 async def startup_event():
-  # バックグラウンドで量子同期ループと無限ノードメッシュを自動稼働
-  async.create_task(sync_loop.start_loop(interval_sec=2.0))
+  # バックグラウンドで量子同期ループと無限ノードメッシュを自動稼働（修正済み）
+  asyncio.create_task(sync_loop.start_loop(interval_sec=2.0))
   print(
       "[SYSTEM OMNI-GRID] Teranode Infinite Node Core & Quantum Sync"
       " Initialized."
